@@ -1,0 +1,3 @@
+pyyaml
+travispy
+gitpython

@@ -9,12 +9,6 @@ python_binary(
     '3rdparty/python:gitpython',
     '3rdparty/python:pyyaml',
     '3rdparty/python:travispy',
-    ':cred'
   ],
   source='exploit_travis.py',
-)
-
-python_library(
-  name='cred',
-  sources=['credential.py'],
 )

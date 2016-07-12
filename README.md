@@ -32,12 +32,21 @@ Disclaimer: This tool only offers the above functionality. Whether you can/shoul
 
   Sample output:
   ```
-  INFO:__EXP__:Starting branch: master
-  Switched to a new branch 'tmp_0fdd071b32db87900dc123a4a082b1e5a87f0625_0_goobj'
-   * [new branch]      head -> tmp_0fdd071b32db87900dc123a4a082b1e5a87f0625_0_goobj
-  Switched to a new branch 'tmp_c7c650094b9accc8e1ff4e5db42f277b54c454a1_1_hkrje'
-   * [new branch]      head -> tmp_c7c650094b9accc8e1ff4e5db42f277b54c454a1_1_hkrje
-  INFO:__EXP__:Build found. Url: https://travis-ci.org/usernameA/repoA/builds/141947066
-  INFO:__EXP__:Build found. Url: https://travis-ci.org/usernameB/repoA/builds/141947079
-  Switched back to branch 'master'
+  $ ./dist/main.pex 
+  INFO:[TPlumber]:Starting branch: fiddle
+  	Switched to a new branch 'travis_tmp_br_bbe12f88ea072af5a017f5af1de067dad6349126_0_wluld'
+  	 * [new branch]      head -> travis_tmp_br_bbe12f88ea072af5a017f5af1de067dad6349126_0_wluld
+  	Switched to branch 'fiddle'
+  INFO:[TPlumber]:Delete tmp branch: travis_tmp_br_bbe12f88ea072af5a017f5af1de067dad6349126_0_wluld
+  	Switched to a new branch 'travis_tmp_br_bbe12f88ea072af5a017f5af1de067dad6349126_1_xyigu'
+  	 * [new branch]      head -> travis_tmp_br_bbe12f88ea072af5a017f5af1de067dad6349126_1_xyigu
+  	Switched to branch 'fiddle'
+  INFO:[TPlumber]:Delete tmp branch: travis_tmp_br_bbe12f88ea072af5a017f5af1de067dad6349126_1_xyigu
+  (Urls below will be opened in browser)
+  INFO:[TPlumber]:Build found. Url: https://travis-ci.org/usernameA/repoA/builds/144084316
+  INFO:[TPlumber]:Build found. Url: https://travis-ci.org/usernameB/repoA/builds/144084334
+  
+  $ ./dist/main.pex  --stop-all
+  INFO:[TPlumber]:Build https://travis-ci.org/usernameA/repoA/builds/144084316 aborted
+  INFO:[TPlumber]:Build https://travis-ci.org/usernameB/repoA/builds/144084334 aborted
   ```

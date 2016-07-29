@@ -9,6 +9,7 @@ python_binary(
     '3rdparty/python:gitpython',
     '3rdparty/python:pyyaml',
     '3rdparty/python:travispy',
+    '3rdparty/python:colorlog',
   ],
   source='exploit_travis.py',
 )

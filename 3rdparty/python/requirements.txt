@@ -1,3 +1,4 @@
 pyyaml
 travispy
 gitpython
+colorlog

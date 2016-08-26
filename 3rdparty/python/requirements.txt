@@ -2,3 +2,4 @@ pyyaml
 travispy
 gitpython
 colorlog
+plexapi

@@ -33,6 +33,7 @@ def parse_args():
 
 
 def play_movie(url, i):
+  logger.info('thread {} started: {}'.format(i, url))
   while True:
     total = 0
     mb = 1024*1024 
@@ -45,8 +46,6 @@ def play_movie(url, i):
           print("{}: {} mb".format(i, total/mb))
           last = int(total/mb)
     except socket.timeout as e:
-      pass
-    except requests.exceptions.Timeout:
       pass
 
 if __name__ == '__main__':

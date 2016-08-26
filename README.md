@@ -1,5 +1,5 @@
 # Plex Traffic Driver
-Drives traffic to test plex server.
+Drives traffic to stress test plex server.
 
 1. `pip install plexapi`
 

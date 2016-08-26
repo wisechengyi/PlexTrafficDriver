@@ -21,12 +21,8 @@ logger.addHandler(handler)
 
 def parse_args():
   parser = argparse.ArgumentParser()
-  parser.add_argument('-d', '--skip-push', action='store_true',
-                      help="Don't run any real commands")
   parser.add_argument("-v", "--verbose", help="increase output verbosity",
                       action="store_true")
-  parser.add_argument("--stop-all", help="stop all travis builds",
-                      action="store_true", default=False)
   parser.add_argument("--baseurl", help="baseurl", type=str, required=True)
   parser.add_argument("--token", help="token", type=str, required=True)
   parser.add_argument("--concurrency", type=int, required=True)

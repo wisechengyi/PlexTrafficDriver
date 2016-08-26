@@ -2,6 +2,7 @@ import argparse
 import json
 import logging
 import os
+import threading
 
 import colorlog
 import requests
@@ -30,6 +31,14 @@ def parse_args():
   return parser.parse_args()
 
 
+def play_movie(url):
+  r = requests.get(url, stream=True)
+  for line in r.iter_lines():
+    # filter out keep-alive new lines
+    if line:
+      print(len(line))
+
+
 if __name__ == '__main__':
   args = parse_args()
   if args.verbose:
@@ -41,33 +50,19 @@ if __name__ == '__main__':
 
   f = open(os.devnull, "w")
   # zookeeper.set_log_stream(f)
+  threads = set()
 
   for video in plex.search('Game'):
     # print('%s (%s)' % (video.title, video.TYPE))
     url = video.getStreamURL(videoResolution='800x600')
-    r = requests.get(url, stream=True)
-    for line in r.iter_lines():
-      # filter out keep-alive new lines
-      if line:
-        print(line)
-        
+    t = threading.Thread(target=play_movie, args=(url,))
+    threads.add(t)
+    t.start()
+
     break
 
+  for t in threads:
+    t.join()
 
-
-    # threads = set()
-    # for movie_url in MOVIES:
-    #   browser = webdriver.Chrome(executable_path=get_chromedrive_binary())
-    #   # browser = webdriver.PhantomJS(executable_path='/usr/bin/phantomjs')
-    #   # browser = webdriver.Firefox()
-    #   # browser.set_window_size(1120, 550)
-    #   existing_browsers.add(browser)
-    #   t = threading.Thread(target=play_movie, args=(browser, movie_url, args))
-    #   threads.add(t)
-    #   t.start()
-    #
-    # for t in threads:
-    #   t.join()
-    #
-    # for b in existing_browsers:
-    #   b.quit()
+  for b in existing_browsers:
+    b.quit()

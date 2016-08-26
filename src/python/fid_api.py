@@ -1,8 +1,10 @@
+from __future__ import (absolute_import, division, generators, nested_scopes, print_function,
+                        unicode_literals, with_statement)
+
 import argparse
 import logging
-import os
-import threading
 import socket
+import threading
 
 import colorlog
 import requests
@@ -36,17 +38,18 @@ def play_movie(url, i):
   logger.info('thread {} started: {}'.format(i, url))
   while True:
     total = 0
-    mb = 1024*1024 
+    mb = 1024 * 1024
     last = 0
     try:
       r = requests.get(url, stream=True, timeout=2)
       for line in r.iter_lines(chunk_size=1024):
         total += len(line)
-        if int(total/mb) > last:
-          print("{}: {} mb".format(i, total/mb))
-          last = int(total/mb)
+        if int(total / mb) > last:
+          print("{}: {} mb".format(i, total / mb))
+          last = int(total / mb)
     except socket.timeout as e:
       pass
+
 
 if __name__ == '__main__':
   args = parse_args()
@@ -59,17 +62,14 @@ if __name__ == '__main__':
 
   threads = set()
 
-  i = 0
-  for video in plex.search('the'):
-  # for video in plex.library.section('Movies'):
-    # print('%s (%s)' % (video.title, video.TYPE))
+  for (i, video) in enumerate(plex.search('the')):
+    # for video in plex.library.section('Movies'):
     if i == args.concurrency:
       break
     url = video.getStreamURL(videoResolution='800x600')
     t = threading.Thread(target=play_movie, args=(url, i))
     threads.add(t)
     t.start()
-    i += 1
-  
+
   for t in threads:
     t.join()

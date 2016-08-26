@@ -1,5 +1,4 @@
 import argparse
-import json
 import logging
 import os
 import threading
@@ -31,12 +30,12 @@ def parse_args():
   return parser.parse_args()
 
 
-def play_movie(url):
+def play_movie(url, i):
   r = requests.get(url, stream=True)
   for line in r.iter_lines():
     # filter out keep-alive new lines
     if line:
-      print(len(line))
+      print(i, len(line))
 
 
 if __name__ == '__main__':
@@ -52,14 +51,16 @@ if __name__ == '__main__':
   # zookeeper.set_log_stream(f)
   threads = set()
 
+  i = 0
   for video in plex.search('Game'):
     # print('%s (%s)' % (video.title, video.TYPE))
     url = video.getStreamURL(videoResolution='800x600')
-    t = threading.Thread(target=play_movie, args=(url,))
+    t = threading.Thread(target=play_movie, args=(url, i))
     threads.add(t)
     t.start()
-
-    break
+    i += 1
+    if i > 4:
+      break
 
   for t in threads:
     t.join()

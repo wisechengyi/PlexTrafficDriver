@@ -1,6 +1,8 @@
 # Plex Traffic Driver
 Drives traffic to test plex server.
 
-In root dir:
+1. `pip install plexapi`
 
-`python src/python/exploit_travis.py --username <username> --password <password>`
+2. In project root dir:
+
+  `python src/python/src/python/fid_api.py --baseurl=<e.g http://x.x.x.x:32400> --token=<token> --concurrency=<number of concrrent streams>`

@@ -2,6 +2,7 @@ import argparse
 import logging
 import os
 import threading
+import socket
 
 import colorlog
 import requests
@@ -32,11 +33,21 @@ def parse_args():
 
 
 def play_movie(url, i):
-  r = requests.get(url, stream=True)
-  for line in r.iter_lines():
-    if line:
-      print("{}: {} KB".format(i, len(line)*512/1024))
-
+  while True:
+    total = 0
+    mb = 1024*1024 
+    last = 0
+    try:
+      r = requests.get(url, stream=True, timeout=2)
+      for line in r.iter_lines(chunk_size=1024):
+        total += len(line)
+        if int(total/mb) > last:
+          print("{}: {} mb".format(i, total/mb))
+          last = int(total/mb)
+    except socket.timeout as e:
+      pass
+    except requests.exceptions.Timeout:
+      pass
 
 if __name__ == '__main__':
   args = parse_args()
@@ -63,6 +74,3 @@ if __name__ == '__main__':
   
   for t in threads:
     t.join()
-
-  for b in existing_browsers:
-    b.quit()

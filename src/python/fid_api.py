@@ -57,7 +57,6 @@ if __name__ == '__main__':
   threads = set()
 
   for (i, video) in enumerate(plex.search('the')):
-    # for video in plex.library.section('Movies'):
     if i == args.concurrency:
       break
     url = video.getStreamURL(videoResolution='800x600')
